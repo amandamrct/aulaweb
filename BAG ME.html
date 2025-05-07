@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Loja Bag Me!</title>
+<style>
+  body {
+    font-family: 'Calibri', sans-serif;
+    background: #f5f5f5;
+    margin: 0;
+    padding: 0 10px;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  header {
+    background-color: #f6bbed;
+    padding: 15px;
+    text-align: center;
+    color: white;
+    border-radius: 5px;
+    margin-top: 15px;
+  }
+  h1 {
+    margin: 0;
+  }
+  .bag-list {
+    margin-top: 20px;
+  }
+  .bag-item {
+    background: white;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+  }
+  .bag-name {
+    font-weight: bold;
+    font-size: 18px;
+    color: #f3c7e9;
+  }
+  .bag-price {
+    margin-top: 8px;
+    color: #333;
+  }
+  .highlight {
+    color: #b30000;
+  }
+  footer {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 14px;
+    color: #888;
+    padding-bottom: 20px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>BAG ME!</h1>
+  <p>Escolha sua bag preferida!</p>
+</header>
+
+<div class="bag-list" id="bagList">
+</div>
+
+<script>
+  var bolsas = {
+            "Amanda": 550.0,
+            "Gabriela": 515.0,
+            "Maria Victoria": 500.0,
+            "Sofia": 470.0,
+            "Cecília": 430.0,
+            "Jade": 370.0,
+            "Marina": 300.0,
+            "Antonela": 290.0,
+            "Isabela": 250.0,
+            "Valentina": 220.0,
+            "Julia": 200.0,
+            "Laura": 160.0,
+            "Camila": 125.0,
+            "Antônia": 120.0
+  };
+
+  var bagList = document.getElementById("bagList");
+
+  for (var nome in bolsas) {
+    if (bolsas.hasOwnProperty(nome)) { 
+      var preco = bolsas[nome];
+
+      var div = document.createElement("div");
+      div.className = "bag-item";
+
+      var nomeEl = document.createElement("div");
+      nomeEl.className = "bag-name";
+      nomeEl.textContent = "Bolsa: " + nome;
+
+      var precoEl = document.createElement("div");
+      precoEl.className = "bag-price";
+
+      if (preco > 300) {
+        precoEl.className += " highlight";
+        precoEl.textContent = "Preço: R$ " + preco.toFixed(2) + " (Premium)";
+      } else {
+        precoEl.textContent = "Preço: R$ " + preco.toFixed(2);
+      }
+
+      div.appendChild(nomeEl);
+      div.appendChild(precoEl);
+
+      bagList.appendChild(div);
+    }
+  }
+</script>
+
+</body>
+</html>
