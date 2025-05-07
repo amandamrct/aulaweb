@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> &#10048 Wish List For Cool Girls &#10048 </title>
+    <style>
+       
+        body {
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #ff58ae;
+        }
+
+        input, select {
+            margin-bottom: 10px;
+            padding: 5px;
+        }
+
+        button {
+            padding: 5px 10px;
+            margin: 5px;
+            background-color: #f6c8c7;
+            border: none;
+            cursor: pointer;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            background-color: #fdf1f1;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-left: 5px solid rgb(248, 177, 234);
+        }
+
+        .prioridade-alta {
+            border-left-color: rgb(246, 125, 125);
+        }
+
+        .prioridade-media {
+            border-left-color: rgb(244, 211, 150);
+        }
+
+        .prioridade-baixa {
+            border-left-color: rgb(202, 250, 202);
+        }
+
+        .remover-btn {
+            background-color: red;
+            color: white;
+            margin-left: 10px;
+        }
+
+        #mostrarTotal {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h2> &#10030 Wish List For Cool Girls &#10030</h2>
+
+    <p>
+        Nome do item: <input type="text" id="nomeItem">
+    </p>
+    <p>
+        Preço: <input type="number" id="precoItem">
+    </p>
+    <p>
+        Prioridade:
+        <select id="prioridadeItem">
+            <option value="baixa">Baixa</option>
+            <option value="media">Média</option>
+            <option value="alta">Alta</option>
+        </select>
+    </p>
+
+    <button onclick="adicionarNaLista()">Adicionar</button>
+    <button onclick="limparTudo()">Limpar Tudo</button>
+
+    <ul id="listaItens"></ul>
+
+    <p id="mostrarTotal">Total: R$ 0,00</p>
+
+    <script>
+        var minhaLista = [];
+
+        function adicionarNaLista() {
+            var nome = document.getElementById("nomeItem").value;
+            var preco = parseFloat(document.getElementById("precoItem").value);
+            var prioridade = document.getElementById("prioridadeItem").value;
+
+            if (nome !== "" && !isNaN(preco)) {
+                var novoItem = {
+                    nome: nome,
+                    preco: preco,
+                    prioridade: prioridade
+                };
+
+                minhaLista.push(novoItem);
+                mostrarLista();
+                limparCampos();
+            } else {
+                alert("Preencha todos os campos corretamente.");
+            }
+        }
+
+        function mostrarLista() {
+            var lista = document.getElementById("listaItens");
+            lista.innerHTML = "";
+
+            var total = 0;
+
+            for (var i = 0; i < minhaLista.length; i++) {
+                var item = minhaLista[i];
+                total += item.preco;
+
+                var li = document.createElement("li");
+                li.className = "prioridade-" + item.prioridade;
+                li.textContent = item.nome + " - R$ " + item.preco.toFixed(2) + " (" + item.prioridade + ")";
+
+                var btn = document.createElement("button");
+                btn.textContent = "Remover";
+                btn.className = "remover-btn";
+                btn.onclick = (function(index) {
+                    return function() {
+                        removerItem(index);
+                    }
+                })(i);
+
+                li.appendChild(btn);
+                lista.appendChild(li);
+            }
+
+            document.getElementById("mostrarTotal").textContent = "Total: R$ " + total.toFixed(2);
+        }
+
+        function removerItem(indice) {
+            minhaLista.splice(indice, 1);
+            mostrarLista();
+        }
+
+        function limparCampos() {
+            document.getElementById("nomeItem").value = "";
+            document.getElementById("precoItem").value = "";
+            document.getElementById("prioridadeItem").value = "media";
+        }
+
+        function limparTudo() {
+            minhaLista = [];
+            mostrarLista();
+        }
+    </script>
+
+</body>
+</html>
